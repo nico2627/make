@@ -1,0 +1,30 @@
+# Logistic Regression on Iris Dataset (Binary Classification)
+
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+import pandas as pd
+
+# Load Iris dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Convert to binary outcome (Setosa = 1, Others = 0)
+y_binary = (y == 0).astype(int)
+
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y_binary, test_size=0.3, random_state=42)
+
+# Create Logistic Regression model
+model = LogisticRegression(max_iter=200)
+model.fit(X_train, y_train)
+
+# Predictions
+y_pred = model.predict(X_test)
+
+# Evaluation metrics
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
